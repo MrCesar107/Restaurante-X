@@ -1,0 +1,125 @@
+-fotos_galeria = ["club-sandwich", "combo", "hamburger", "hot-cakes", "club-sandwich", "combo"]
+
+!!!5
+%html{class:"no-js", lang:"es-mx"}
+	%head
+		%meta{charset:"UTF-8"}
+		%title Restaurante X
+		%meta{name:"description", content:"Come rico en el mejor restaurante de la ciudad, servicio de primera."}
+		%link{rel:"stylesheet", type:"text/css", href:"css/normalize.css"}
+		%link{rel:"stylesheet", type:"text/css", href:"css/bootstrap.css"}
+		%link{rel:"stylesheet", type:"text/css", href:"https://cdnjs.cloudflare.com/ajax/libs/flexboxgrid/6.3.1/flexboxgrid.min.css"}
+		%link{rel:"stylesheet", type:"text/css", href:"https://fonts.googleapis.com/css?family=Dancing+Script"}
+		%link{rel:"stylesheet", type:"text/css", href:"css/estilos.css"}
+		%meta{name:"viewport", content:"width=device-width, initial-scale=1"}
+		%meta{:"data-name" => "image-counter", content:"#{fotos_galeria.size - 1}"}
+		%script{src:"js/vendor/modernizr-2.8.3.min.js"}
+	%body
+		="<!--[if lt IE 8]>"
+		%p{class:"browserupgrade"}
+		Estás usando un navegador
+		%strong desactualizado.
+		Por favor
+		%a{href:"http://browsehappy.com/"}
+		actualiza tu navegador
+		para una mejor experiencia
+		="<![endif]-->"
+		.video-container
+			%video{autoplay:true, loop:true, width:1280, height:720, poster:"recursos/imagenes/bbq.jpg"}
+				%source{src:"recursos/videos/bbq.mp4", type:"video/mp4"}
+				%source{src:"recursos/videos/bbq.webm", type:"video/webm"}
+		.row.full-height.middle-xs.center-xs.relative.up#home
+			.col-xs-12
+				.box.white-text
+					%img{src:"recursos/imagenes/logo.png",width:200}
+					%h1.dancing-script.titulo.no-margin Restaurante X
+					%p#is_open 
+						%i.glyphicon.glyphicon-time
+							%span.text Abierto ahora
+
+			%nav.fixed.top.right.navigation.white-text#navigation
+				-menu = [{title:"Inicio", link:"#home"}, {title:"Menú", link:"#menu"}, {title:"Galería", link:"#galeria"}, {title:"Contacto", link:"#contacto"}, {title:"Cómo llegar", link:"#location"}]
+				%ul.list-inline
+					-menu.each do |item|
+						%li
+							%a{href:item[:link]}= item[:title]
+
+			.absolute.black.large.white-text.full-width.full-width.absolute-padding#description
+				.row.middle-xs.center-xs
+					.col-xs-7.col-sm-6.white-text.medium
+						Atención cálida y comida preparada por artistas.
+					.col-x.hidden#stickyNavigation
+						.box
+							%nav.text-right.navigation#responsive-nav
+								%i.glyphicon.glyphicon-menu-hamburger.white-text.subtitle.glyphicon-remove#menu-opener
+								%ul.list-inline
+									-menu.each do |item|
+										%li
+											%a.menu-link{href:item[:link]}= item[:title]
+		.text-center.relative#menu
+			.absolute.white#menu-titulo
+				%h2.dancing-script.title Menú
+			-menu_fotos = [{name: "Club Sandwich", pricing:"$40.00", image:"club-sandwich"}, {name: "Combo Hamburguesa", pricing:"$50.00", image:"combo"}, {name: "Hamburguesa", pricing:"$30.00", image:"hamburger"}, {name: "Hot cakes", pricing:"$30.00", image:"hot-cakes"}, {name: "Panini", pricing:"$153.00", image:"panini"}, {name: "Papas", pricing:"$30.00", image:"papas"}, {name: "Club Sandwich", pricing:"$40.00", image:"club-sandwich"}, {name: "Combo Hamburguesa", pricing:"$50.00", image:"combo"}]
+
+			.row
+				-menu_fotos.each do |foto|
+					.col-md-4.col-lg-3.col-sm-6.col-xs-12.food{style:"background-image:url(recursos/imagenes/#{foto[:image]}-thumb.jpg)"}
+						.screen
+							.row.middle-xs.full-height
+								.col-xs-12.white-text
+									%h3.dancing-script.subtitulo= foto[:name]
+									%p.no-margin= foto[:pricing]
+
+		#galeria
+			.inner
+				-fotos_galeria.each do |imagen|
+					.image{style:"background-image:url(recursos/imagenes/#{imagen}.jpg);"}
+
+		.container
+			.card.white.black-text.text-center.relative
+				%h3.medium.slim
+					En
+					%strong.dancing-script.medium Restaurante X
+					cocinar no es una profesión ni una técnica, es un
+					%strong.dancing-script.medium arte
+
+				%p.top-space
+					Somos un restaurante con más de 20 años de experencia, ubicado en una de las mejores zonas de la Ciudad de México. Nuestro compromiso es servirle a todos los clientes, los mejores platillos gourmtet, con la mejor calidad culinaria. Atrévase, conózcanos.
+					%strong.dancing-script.medium Chef Gusteau
+
+		.black.text-white.full-height#contacto
+			.row.middle-xs.full-height
+				.col-xs-12
+					.box
+						%p.text-center.medium.white-text#info-texto CONTACTO
+						%form.white-text{action:"https://formspree.io/cesar.rodriguez.lara54@gmail.com", method:"POST", id:"contact", class:"step-form"}
+							.row.center-xs
+								.col-xs-2.col-sm-2.col-md-1.text-right.first-sm
+									.box
+										-3.times do |i|
+											-if i == 0
+												.path-step.active
+											-else
+												.path-step
+								.col-xs-12.col-sm-3.first-xs
+									.box
+										%fieldset.step.active 
+											%input{type:"email", name:"email", placeholder:"Coloca tu correo", class:"input", required: true}
+										%fieldset.step
+											%input{type:"text", name:"nombre", placeholder:"Coloca tu nombre", class:"input", required: true}
+										%fieldset.step
+											%textarea{name:"cuerpo", placeholder:"Escribe aquí tu mensaje", class:"input", required: true}
+							%div.text-center
+								%button.black-text{type:"submit", class:"btn btn-success"}Enviar
+
+		#location
+			#map
+			#mensaje.black.large-padding.white-text.text-center.medium
+
+		%script{src:"https://code.jquery.com/jquery-3.1.0.min.js", integrity:"sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=", crossorigin:"anonymous"}
+
+		%script
+			window.jQuery || document.write("<script src='js/vendor/jquery-1.12.0.min.js'><\/script>");
+
+		%script{type:"text/javascript", src:"https://maps.googleapis.com/maps/api/js?key=AIzaSyDRlN5fJBVhqZNoaeJ2gGO36BkOYPOvfPk"}
+		%script{type:"text/javascript", src:"dist/app.js"}
